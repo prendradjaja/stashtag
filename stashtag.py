@@ -12,7 +12,9 @@ def main():
         list_stashes(argv[1:])
 
 def show_branch_defaults():
-    raise Exception('Not implemented')
+    defaults = get_defaults()
+    if defaults:
+        print(' '.join(defaults))
 
 def list_stashes(hashtags_no_hash):
     # TODO ignore defaults
