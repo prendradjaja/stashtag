@@ -26,11 +26,11 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
 Branch-specific default hashtags:
 ```
-$ stashtag -b  # or --branch-defaults
+$ stashtag -s  # or --show-defaults
 
 $ git checkout feature/fizz
 
-$ stashtag -b
+$ stashtag -s
 fizz
 
 $ stashtag
@@ -42,4 +42,9 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
 $ cat .stashtag
 feature/fizz: fizz
+```
+
+Ignoring defaults:
+```
+$ stashtag -n  # or --no-defaults
 ```
