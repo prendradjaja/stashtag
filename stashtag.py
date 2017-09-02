@@ -5,7 +5,7 @@ import os
 
 def main():
     argv = sys.argv
-    if '-s' in argv or '--show-defaults' in argv:
+    if '-l' in argv or '--list-defaults' in argv:
         assert len(argv) == 2
         show_branch_defaults()
     else:
