@@ -8,18 +8,22 @@ def main():
     if '-l' in argv or '--list-defaults' in argv:
         assert len(argv) == 2
         show_branch_defaults()
+    elif '-n' in argv or '--no-defaults' in argv:
+        assert argv[1] in ('-n', '--no-defaults')
+        list_stashes(argv[2:], False)
     else:
-        list_stashes(argv[1:])
+        list_stashes(argv[1:], True)
 
 def show_branch_defaults():
     defaults = get_defaults()
     if defaults:
         print(' '.join(defaults))
 
-def list_stashes(hashtags_no_hash):
+def list_stashes(hashtags_no_hash, use_defaults):
     # TODO ignore defaults
     hashtags = ['#' + tag for tag in hashtags_no_hash]
-    hashtags.extend(get_defaults())
+    if use_defaults:
+        hashtags.extend(get_defaults())
     for line in get_stashes():
         if all(tag in line for tag in hashtags):
             print(line)

@@ -47,4 +47,12 @@ feature/fizz: fizz
 Ignoring defaults:
 ```
 $ stashtag -n  # or --no-defaults
+stash@{0}: WIP on feature/fizz: Do the thing #fizz
+stash@{1}: WIP on feature/fizz: Buzz #fizz
+stash@{2}: On asdf: Verbose logging #debug
+stash@{3}: On feature/fizz: Quiet logging #debug #fizz
+
+$ stashtag -n debug
+stash@{2}: On asdf: Verbose logging #debug
+stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 ```
