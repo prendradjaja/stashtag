@@ -1,4 +1,7 @@
 `stashtag` filters your `git` stashes by hashtags.
+
+not in any sort of stable state; use at your own peril
+
 ```
 $ git status
 On branch master
