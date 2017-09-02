@@ -2,7 +2,7 @@
 
 `stashtag` filters your `git` stashes by hashtags.
 
-not in any sort of stable state; use at your own peril
+Not in any sort of stable state. Use at your own peril.
 
 ```
 $ git status
@@ -23,20 +23,20 @@ stash@{1}: WIP on feature/fizz: Buzz #fizz
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 ```
 
-**Multiple hashtags:**
+**Multiple tags:**
 ```
 $ stashtag fizz debug
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 ```
 
-**Branch-specific default hashtags:**
+**Branch-specific default tags:**
 ```
-$ stashtag -s  # or --show-defaults
+$ stashtag -l  # or --list-defaults. My master branch has no defaults.
 
 $ git checkout feature/fizz
 
-$ stashtag -s
-fizz
+$ stashtag -l  # My feature/fizz branch has one default tag: #fizz.
+#fizz
 
 $ stashtag
 stash@{1}: WIP on feature/fizz: Buzz #fizz
@@ -45,13 +45,13 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 $ stashtag debug
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
-$ cat .stashtag  # this file must be located at your git repo's root directory
+$ cat .stashtag  # This file must be at your git repo's root directory.
 feature/fizz: fizz
 ```
 
 **Ignoring defaults:**
 ```
-$ stashtag -n  # or --no-defaults
+$ stashtag -n  # or --no-defaults.
 stash@{0}: WIP on feature/fizz: Do the thing #fizz
 stash@{1}: WIP on feature/fizz: Buzz #fizz
 stash@{2}: On asdf: Verbose logging #debug
