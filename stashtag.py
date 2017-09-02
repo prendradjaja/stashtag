@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import subprocess
-
-# TODO not hardcoded lol
-DEFAULTS = '''
-hardcoded-defaults: fizz
-
-something: else abc
-'''
+import os
 
 def main():
     argv = sys.argv
@@ -34,26 +28,23 @@ def get_stashes():
         .split('\n'))
     output = [line for line in output if line != '']
     return output
-    # return [
-    #     'stash #fizz #debug',
-    #     'stash #debug',
-    #     'stash #fizz',
-    #     'stash',
-    #     ]
 
 def get_defaults():
     """ with # """
     branch = (subprocess.check_output('git rev-parse --abbrev-ref HEAD'.split())
             .decode('utf-8')
             .strip())
-    defaults = parse_defaults(DEFAULTS)
+    config_text = read_config_file()
+    defaults = {}
+    if config_text:
+        defaults = parse_defaults(config_text)
     if branch in defaults:
         return defaults[branch]
     else:
         return []
 
 def parse_defaults(config_text):
-    nonempty = [line for line in config_text.split('\n') if line != '']
+    nonempty = [line for line in config_text if line != '\n']
     defaults = {}
     for line in nonempty:
         branch, tags_with_spaces = line.split(':')
@@ -61,6 +52,31 @@ def parse_defaults(config_text):
         tags_with_hashes = ['#' + tag for tag in tags]
         defaults[branch] = tags_with_hashes
     return defaults
+
+def find_vcs_root(test=os.getcwd(), dirs=(".git",), default=None):
+    """
+    Adapted from ideasman42 on StackOverflow:
+    https://stackoverflow.com/a/43786287
+    """
+    prev, test = None, os.path.abspath(test)
+    while prev != test:
+        if any(os.path.isdir(os.path.join(test, d)) for d in dirs):
+            return test
+        prev, test = test, os.path.abspath(os.path.join(test, os.pardir))
+    return default
+
+def read_config_file():
+    """
+    Return contents of config file or None
+    """
+    git_root = find_vcs_root()
+    filepath = str(git_root) + '/.stashtag'
+    # the str() call is a bit of a hack: if git_root is None, filepath will be
+    # nonsense, but the condition below will evaluate to False anyway.
+    if git_root and os.path.isfile(filepath):
+        return open(filepath, 'r').readlines()
+    else:
+        return None
 
 if __name__ == '__main__':
     main()
