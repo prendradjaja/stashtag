@@ -1,3 +1,5 @@
+# stashtag
+
 `stashtag` filters your `git` stashes by hashtags.
 
 not in any sort of stable state; use at your own peril
@@ -21,13 +23,13 @@ stash@{1}: WIP on feature/fizz: Buzz #fizz
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 ```
 
-Multiple hashtags:
+**Multiple hashtags:**
 ```
 $ stashtag fizz debug
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 ```
 
-Branch-specific default hashtags:
+**Branch-specific default hashtags:**
 ```
 $ stashtag -s  # or --show-defaults
 
@@ -43,11 +45,11 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 $ stashtag debug
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
-$ cat .stashtag
+$ cat .stashtag  # this file must be located at your git repo's root directory
 feature/fizz: fizz
 ```
 
-Ignoring defaults:
+**Ignoring defaults:**
 ```
 $ stashtag -n  # or --no-defaults
 stash@{0}: WIP on feature/fizz: Do the thing #fizz
