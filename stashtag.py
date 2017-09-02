@@ -20,7 +20,6 @@ def show_branch_defaults():
         print(' '.join(defaults))
 
 def list_stashes(hashtags_no_hash, use_defaults):
-    # TODO ignore defaults
     hashtags = ['#' + tag for tag in hashtags_no_hash]
     if use_defaults:
         hashtags.extend(get_defaults())
