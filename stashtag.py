@@ -19,13 +19,15 @@ def show_branch_defaults():
     if defaults:
         print(' '.join(defaults))
 
-def list_stashes(hashtags_no_hash, use_defaults):
-    hashtags = ['#' + tag for tag in hashtags_no_hash]
+def list_stashes(hashtags, use_defaults):
     if use_defaults:
         hashtags.extend(get_defaults())
     for line in get_stashes():
         if all(tag in line for tag in hashtags):
             print(line)
+
+def add_hash_symbol(lst):
+    return ['#' + each for each in lst]
 
 def get_stashes():
     output = (subprocess.check_output(['git', 'stash', 'list'])
@@ -35,7 +37,6 @@ def get_stashes():
     return output
 
 def get_defaults():
-    """ with # """
     branch = (subprocess.check_output('git rev-parse --abbrev-ref HEAD'.split())
             .decode('utf-8')
             .strip())
@@ -54,8 +55,7 @@ def parse_defaults(config_text):
     for line in nonempty:
         branch, tags_with_spaces = line.split(':')
         tags = tags_with_spaces.split()
-        tags_with_hashes = ['#' + tag for tag in tags]
-        defaults[branch] = tags_with_hashes
+        defaults[branch] = tags
     return defaults
 
 def find_vcs_root(test=os.getcwd(), dirs=(".git",), default=None):
