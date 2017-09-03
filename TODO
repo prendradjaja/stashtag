@@ -1,0 +1,6 @@
+not yet started:
+- tests
+- graceful errors
+
+in progress:
+- don't use # on --list-defaults
