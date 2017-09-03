@@ -72,7 +72,7 @@ git clone https://github.com/prendradjaja/stashtag
 
 **Add an alias to your bashrc**
 ```
-'alias stashtag="SOME_DIRECTORY/stashtag/stashtag.py"
+alias stashtag="SOME_DIRECTORY/stashtag/stashtag.py"
 ```
 
 Requires Python 3.
