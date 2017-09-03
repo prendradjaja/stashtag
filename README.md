@@ -64,10 +64,15 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
 ## Installation
 
+**Clone this repo**
 ```
 cd SOME_DIRECTORY
 git clone https://github.com/prendradjaja/stashtag
-echo 'alias stashtag="SOME_DIRECTORY/stashtag/stashtag.py"'
+```
+
+**Add an alias to your bashrc**
+```
+'alias stashtag="SOME_DIRECTORY/stashtag/stashtag.py"
 ```
 
 Requires Python 3.
