@@ -22,7 +22,7 @@ stash3 = 'stash@{3}: On feature/fizz: Quiet logging #debug #fizz'
 all_stashes = [stash0, stash1, stash2, stash3]
 myconfig = ['feature/fizz: fizz']
 
-def make_expected_output(*lines):
+def unlines(*lines):
     return '\n'.join(lines) + '\n'
 
 # TODO unused?
@@ -43,15 +43,29 @@ P = collections.namedtuple('P', 'branch,stashes,config_text,args,expected')
         stashes=all_stashes,
         config_text=myconfig,
         args=[],
-        expected=make_expected_output(*all_stashes)
+        expected=unlines(*all_stashes)
     ),
     P(
         branch='master',
         stashes=all_stashes,
         config_text=myconfig,
         args=['debug'],
-        expected=make_expected_output(stash2, stash3)
-    )
+        expected=unlines(stash2, stash3)
+    ),
+    P(
+        branch='master',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['fizz'],
+        expected=unlines(stash0, stash1, stash3)
+    ),
+    P(
+        branch='master',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['fizz', 'debug'],
+        expected=unlines(stash3)
+    ),
 ])
 @mock.patch('config.read_config_file')
 @mock.patch('git.get_stashes')
