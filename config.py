@@ -1,6 +1,6 @@
 import os
 
-def find_vcs_root(test=os.getcwd(), dirs=(".git",), default=None):
+def _find_vcs_root(test=os.getcwd(), dirs=(".git",), default=None):
     """
     Adapted from ideasman42 on StackOverflow:
     https://stackoverflow.com/a/43786287
@@ -16,7 +16,7 @@ def read_config_file():
     """
     Return contents of config file or None
     """
-    git_root = find_vcs_root()
+    git_root = _find_vcs_root()
     filepath = str(git_root) + '/.stashtag'
     # the str() call is a bit of a hack: if git_root is None, filepath will be
     # nonsense, but the condition below will evaluate to False anyway.

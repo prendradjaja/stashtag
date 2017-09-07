@@ -4,6 +4,9 @@ import sys
 import git
 import config
 
+def branch():
+    return git.get_branch()
+
 def main(argv):
     if '-l' in argv or '--list-defaults' in argv:
         assert len(argv) == 2
