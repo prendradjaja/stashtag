@@ -14,15 +14,18 @@ def test_branch(mock_get_branch):
     mock_get_branch.return_value = 'foo'
     assert stashtag.branch() == 'foo'
 
+# TODO move to testdata/fixtures/something
 stash0 = 'stash@{0}: WIP on feature/fizz: Do the thing #fizz'
 stash1 = 'stash@{1}: WIP on feature/fizz: Buzz #fizz'
 stash2 = 'stash@{2}: On asdf: Verbose logging #debug'
 stash3 = 'stash@{3}: On feature/fizz: Quiet logging #debug #fizz'
 all_stashes = [stash0, stash1, stash2, stash3]
+myconfig = ['feature/fizz: fizz']
 
 def make_expected_output(*lines):
     return '\n'.join(lines) + '\n'
 
+# TODO unused?
 def mytuple(attrs):
     attrs = attrs.split(',')
     def constructor(**kwargs):
@@ -32,25 +35,32 @@ def mytuple(attrs):
         return ret
     return constructor
 
-P = collections.namedtuple('P', 'branch,stashes,config_text,argv,expected')
+P = collections.namedtuple('P', 'branch,stashes,config_text,args,expected')
 
-@pytest.mark.parametrize('branch,stashes,config_text,argv,expected', [
+@pytest.mark.parametrize('branch,stashes,config_text,args,expected', [
     P(
         branch='master',
         stashes=all_stashes,
-        config_text='',
-        argv=[],
+        config_text=myconfig,
+        args=[],
         expected=make_expected_output(*all_stashes)
+    ),
+    P(
+        branch='master',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['debug'],
+        expected=make_expected_output(stash2, stash3)
     )
 ])
 @mock.patch('config.read_config_file')
 @mock.patch('git.get_stashes')
 @mock.patch('git.get_branch')
-def test_e2e(mock_branch, mock_stashes, mock_config, capsys, branch, stashes, config_text, argv, expected):
+def test_e2e(mock_branch, mock_stashes, mock_config, capsys, branch, stashes, config_text, args, expected):
     mock_branch.return_value = branch
     mock_stashes.return_value = stashes
     mock_config.return_value = config_text
 
-    stashtag.main([])
+    stashtag.main(['UNUSED'] + args)  # argv = first_arg + args
     out, err = capsys.readouterr()
     assert out == expected
