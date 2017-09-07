@@ -4,7 +4,7 @@ import sys
 import git
 import config
 
-def main(argv=sys.argv):
+def main(argv):
     if '-l' in argv or '--list-defaults' in argv:
         assert len(argv) == 2
         show_branch_defaults()
@@ -50,4 +50,4 @@ def parse_defaults(config_text):
     return defaults
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
