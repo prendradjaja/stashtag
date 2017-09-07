@@ -1,5 +1,6 @@
 import pytest
 import unittest.mock as mock
+import collections
 
 import stashtag
 
@@ -22,8 +23,25 @@ all_stashes = [stash0, stash1, stash2, stash3]
 def make_expected_output(*lines):
     return '\n'.join(lines) + '\n'
 
+def mytuple(attrs):
+    attrs = attrs.split(',')
+    def constructor(**kwargs):
+        ret = []
+        for each in attrs:
+            ret.append(kwargs[each])
+        return ret
+    return constructor
+
+P = collections.namedtuple('P', 'branch,stashes,config_text,argv,expected')
+
 @pytest.mark.parametrize('branch,stashes,config_text,argv,expected', [
-    ('master', all_stashes, '', [], make_expected_output(*all_stashes))
+    P(
+        branch='master',
+        stashes=all_stashes,
+        config_text='',
+        argv=[],
+        expected=make_expected_output(*all_stashes)
+    )
 ])
 @mock.patch('config.read_config_file')
 @mock.patch('git.get_stashes')
