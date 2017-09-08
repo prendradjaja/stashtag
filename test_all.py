@@ -22,6 +22,7 @@ stash3 = 'stash@{3}: On feature/fizz: Quiet logging #debug #fizz'
 all_stashes = [stash0, stash1, stash2, stash3]
 myconfig = ['feature/fizz: fizz']
 
+# TODO is this the right name?
 def unlines(*lines):
     return '\n'.join(lines) + '\n'
 
@@ -37,6 +38,8 @@ def mytuple(attrs):
 
 P = collections.namedtuple('P', 'branch,stashes,config_text,args,expected')
 
+# TODO maybe don't use parametrize -- makes it hard to see which test failed
+# for something like this
 @pytest.mark.parametrize('branch,stashes,config_text,args,expected', [
     P(
         branch='master',
@@ -65,6 +68,48 @@ P = collections.namedtuple('P', 'branch,stashes,config_text,args,expected')
         config_text=myconfig,
         args=['fizz', 'debug'],
         expected=unlines(stash3)
+    ),
+    P(
+        branch='master',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['-l'],
+        expected=''  # TODO is this unlines-able
+    ),
+    P(
+        branch='feature/fizz',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['-l'],
+        expected=unlines('#fizz')
+    ),
+    P(
+        branch='feature/fizz',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=[],
+        expected=unlines(stash0, stash1, stash3)
+    ),
+    P(
+        branch='feature/fizz',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['debug'],
+        expected=unlines(stash3)
+    ),
+    P(
+        branch='feature/fizz',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['-n'],
+        expected=unlines(*all_stashes)
+    ),
+    P(
+        branch='feature/fizz',
+        stashes=all_stashes,
+        config_text=myconfig,
+        args=['-n', 'debug'],
+        expected=unlines(stash2, stash3)
     ),
 ])
 @mock.patch('config.read_config_file')
