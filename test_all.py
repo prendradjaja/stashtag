@@ -38,6 +38,7 @@ def mytuple(attrs):
 
 P = collections.namedtuple('P', 'branch,stashes,config_text,args,expected')
 
+# TODO stashes,config_text don't vary
 # TODO maybe don't use parametrize -- makes it hard to see which test failed
 # for something like this
 @pytest.mark.parametrize('branch,stashes,config_text,args,expected', [
