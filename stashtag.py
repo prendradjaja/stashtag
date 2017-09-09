@@ -7,12 +7,19 @@ import config
 def branch():
     return git.get_branch()
 
+def fail_if(condition, message):
+    if condition:
+        print('Error: ' + message)
+        exit(1)
+
 def main(argv):
     if '-l' in argv or '--list-defaults' in argv:
-        assert len(argv) == 2
+        fail_if(len(argv) != 2,
+                '-l (or --list-defaults) cannot be used with other arguments.')
         show_branch_defaults()
     elif '-n' in argv or '--no-defaults' in argv:
-        assert argv[1] in ('-n', '--no-defaults')
+        fail_if(argv[1] not in ('-n', '--no-defaults'),
+                '-n (or --no-defaults) must be the first argument if present.')
         list_stashes(argv[2:], False)
     else:
         list_stashes(argv[1:], True)
