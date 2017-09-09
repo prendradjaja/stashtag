@@ -37,7 +37,7 @@ $ stashtag -l  # or --list-defaults. My master branch has no defaults.
 $ git checkout feature/fizz
 
 $ stashtag -l  # My feature/fizz branch has one default tag: #fizz.
-#fizz
+fizz
 
 $ stashtag
 stash@{0}: WIP on feature/fizz: Do the thing #fizz

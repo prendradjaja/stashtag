@@ -61,7 +61,7 @@ P = collections.namedtuple('P', 'branch,stashes,config_text,args,expected')
         stashes=all_stashes,
         config_text=myconfig,
         args=['-l'],
-        expected=unlines('#fizz')
+        expected=unlines('fizz')
     ),
     P(
         branch='feature/fizz',

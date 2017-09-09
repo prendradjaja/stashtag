@@ -22,16 +22,18 @@ def show_branch_defaults():
     if defaults:
         print(' '.join(defaults))
 
-def list_stashes(hashtags_no_hash, use_defaults):
-    hashtags = ['#' + tag for tag in hashtags_no_hash]
+def add_hash_symbol(lst):
+    return ['#' + tag for tag in lst]
+
+def list_stashes(hashtags, use_defaults):
     if use_defaults:
         hashtags.extend(get_defaults())
+    hashtags = add_hash_symbol(hashtags)
     for line in git.get_stashes():
         if all(tag in line for tag in hashtags):
             print(line)
 
 def get_defaults():
-    """ with # """
     branch = git.get_branch()
     config_text = config.read_config_file()
     defaults = {}
@@ -48,8 +50,7 @@ def parse_defaults(config_text):
     for line in nonempty:
         branch, tags_with_spaces = line.split(':')
         tags = tags_with_spaces.split()
-        tags_with_hashes = ['#' + tag for tag in tags]
-        defaults[branch] = tags_with_hashes
+        defaults[branch] = tags
     return defaults
 
 if __name__ == '__main__':
