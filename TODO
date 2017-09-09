@@ -1,0 +1,5 @@
+MAYBE:
+- should #debu match #debug? i.e. do we require whole-word matches? if so, we
+  must dictate what characters are allowed in a tag. does the benefit outweigh
+  this cost?
+- "grep --color" highlighting
