@@ -3,7 +3,7 @@ import sys
 
 import git
 import config
-from util import fail_if
+from util import fail_if, maybe_remove
 
 def main(argv):
     if '-l' in argv or '--list-defaults' in argv:
@@ -11,9 +11,10 @@ def main(argv):
                 '-l (or --list-defaults) cannot be used with other arguments.')
         show_branch_defaults()
     elif '-n' in argv or '--no-defaults' in argv:
-        fail_if(argv[1] not in ('-n', '--no-defaults'),
-                '-n (or --no-defaults) must be the first argument if present.')
-        list_stashes(argv[2:], False)
+        argv = list(argv)
+        maybe_remove(argv, '-n')
+        maybe_remove(argv, '--no-defaults')
+        list_stashes(argv[1:], False)
     else:
         list_stashes(argv[1:], True)
 
