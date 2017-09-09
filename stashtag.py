@@ -4,14 +4,6 @@ import sys
 import git
 import config
 
-def branch():
-    return git.get_branch()
-
-def fail_if(condition, message):
-    if condition:
-        print('Error: ' + message)
-        exit(1)
-
 def main(argv):
     if '-l' in argv or '--list-defaults' in argv:
         fail_if(len(argv) != 2,
@@ -28,9 +20,6 @@ def show_branch_defaults():
     defaults = get_defaults()
     if defaults:
         print(' '.join(defaults))
-
-def add_hash_symbol(lst):
-    return ['#' + tag for tag in lst]
 
 def list_stashes(hashtags, use_defaults):
     if use_defaults:
@@ -59,6 +48,14 @@ def parse_defaults(config_text):
         tags = tags_with_spaces.split()
         defaults[branch] = tags
     return defaults
+
+def add_hash_symbol(lst):
+    return ['#' + tag for tag in lst]
+
+def fail_if(condition, message):
+    if condition:
+        print('Error: ' + message)
+        exit(1)
 
 if __name__ == '__main__':
     main(sys.argv)
