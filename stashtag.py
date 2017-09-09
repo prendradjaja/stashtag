@@ -3,6 +3,7 @@ import sys
 
 import git
 import config
+from util import fail_if
 
 def main(argv):
     if '-l' in argv or '--list-defaults' in argv:
@@ -51,11 +52,6 @@ def parse_defaults(config_text):
 
 def add_hash_symbol(lst):
     return ['#' + tag for tag in lst]
-
-def fail_if(condition, message):
-    if condition:
-        print('Error: ' + message)
-        exit(1)
 
 if __name__ == '__main__':
     main(sys.argv)

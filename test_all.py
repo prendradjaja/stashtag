@@ -3,15 +3,13 @@ import unittest.mock as mock
 import collections
 
 import stashtag
+from util import unlines
 
 stash0 = 'stash@{0}: WIP on feature/fizz: Do the thing #fizz'
 stash1 = 'stash@{1}: WIP on feature/fizz: Buzz #fizz'
 stash2 = 'stash@{2}: On asdf: Verbose logging #debug'
 stash3 = 'stash@{3}: On feature/fizz: Quiet logging #debug #fizz'
 all_stashes = [stash0, stash1, stash2, stash3]
-
-def unlines(*lines):
-    return ''.join(line + '\n' for line in lines)
 
 P = collections.namedtuple('P', 'branch,args,expected')
 
