@@ -13,8 +13,10 @@ all_stashes = [stash0, stash1, stash2, stash3]
 
 P = collections.namedtuple('P', 'name,branch,args,expected')
 
+# TODO maybe use .split() for args
+
 params = [
-    # Examples from the README
+    # Examples from the README. Numbered by tens for ease of editing.
     P(
         name='README 10',
         branch='master',
@@ -72,10 +74,34 @@ params = [
 
     # Other
     P(
-        name='Running without arguments shows all stashes',
+        name='Running without arguments should show all stashes',
         branch='master',
         args=[],
         expected=unlines(*all_stashes)
+    ),
+    P(
+        name='--list-defaults should work',
+        branch='feature/fizz',
+        args=['--list-defaults'],
+        expected=unlines('fizz')
+    ),
+    P(
+        name='--no-defaults should work',
+        branch='feature/fizz',
+        args=['--no-defaults', 'debug'],
+        expected=unlines(stash2, stash3)
+    ),
+    P(
+        name='-n at middle of argv should work',
+        branch='feature/fizz',
+        args=['fizz', '-n', 'debug'],
+        expected=unlines(stash3)
+    ),
+    P(
+        name='-n at end of argv should work',
+        branch='feature/fizz',
+        args=['fizz', 'debug', '-n'],
+        expected=unlines(stash3)
     ),
 ]
 @pytest.mark.parametrize('name,branch,args,expected', params)
