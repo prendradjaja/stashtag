@@ -32,6 +32,10 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
 **Branch-specific default tags:**
 ```sh
+# This config file must be at your repo's root directory.
+$ cat .stashtag
+feature/fizz: fizz
+
 $ stashtag -l  # or --list-defaults. My master branch has no defaults.
 
 $ git checkout feature/fizz
@@ -46,9 +50,6 @@ stash@{3}: On feature/fizz: Quiet logging #debug #fizz
 
 $ stashtag debug
 stash@{3}: On feature/fizz: Quiet logging #debug #fizz
-
-$ cat .stashtag  # This file must be at your git repo's root directory.
-feature/fizz: fizz
 ```
 
 **Ignoring defaults:**
